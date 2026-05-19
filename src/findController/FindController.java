@@ -4,6 +4,8 @@
  */
 package findController;
 import models.Product;
+import models.Person;
+import java.util.ArrayList;
 /**
 /**
 * 
@@ -33,6 +35,15 @@ import models.Product;
  * 
  */
 public class FindController {
+    public void printRange(Person[] persons, int bajo, int alto){
+        for(int i = bajo; i <= alto; i++){
+            System.out.print(persons[i].getEdad());
+            if(i < alto){
+                System.out.print(" | ");
+            }
+        }
+        System.out.println();
+    }
     public int findByNameBinari(Product[] products, String name){
         
         int alto = products.length-1;                           //ULTIMA POSICION DEL ARREGLO
@@ -67,5 +78,48 @@ public class FindController {
            if(!cambio)
                break;
         }    
+    }
+    
+    
+    public void sortByAgre(Person[] persons){
+        int n = persons.length;
+        
+        for(int gap = n/2; gap>0; gap /=2){
+            for(int i = gap; i<n; i++){
+                Person temp = persons[i];
+                int j = i;
+                
+                while(j>=gap && persons[j-gap].getEdad()>temp.getEdad()){
+                    persons[j] = persons[j-gap];
+                    j -= gap;
+                }
+                persons[j]=temp;
+            }
+        }
+    }
+    
+    public int findByAge(Person[] persons, int ageFind){
+        int alto = persons.length - 1;
+        int bajo = 0;
+
+        while(bajo <= alto){
+            int central = (alto + bajo) / 2;
+            printRange(persons, bajo, alto);
+            System.out.print( "bajo=" + bajo + " " + " alto=" + alto + " "+ " centro=" + central +" " +" valorCentro=" + central);
+            if(persons[central].getEdad() == ageFind){
+                System.out.print(" " +  "ELEMENTO ENCONTRADO: "+central);
+                System.out.println();
+                return central;
+            }
+            if(persons[central].getEdad() > ageFind){
+                System.out.print(" " + "BUSCAMOS EN LA IZQUIERDA");
+                alto = central - 1;
+            } else {
+                System.out.print(" " + "BUSCAMOS EN LA DERECHA");
+                bajo = central + 1;
+            }
+            System.out.println();
+        }
+        return -1;
     }
 }

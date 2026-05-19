@@ -5,15 +5,54 @@
 package App;
 import models.Product;
 import findController.FindController;
+import java.util.Scanner;
+import models.Person;
 /**
  *
  * @author User
  */
 public class App {
     public static void main(String[] args) {
+        FindController controller = new FindController();
+        Scanner sc = new Scanner(System.in);
         
-        Product[] products = {                // Reaizamos un arreglo de ejemplo para usar busqueda binaria
-            new Product("Laptop", 20),
+        System.out.println("BIENVENIDO AL SISTEMA DE BUSQUEDA");
+        System.out.print("Ingrese la cantidad de personas: ");
+        int num = sc.nextInt();
+        sc.nextLine();
+        
+        Person[] persons = new Person[num];
+        for(int i = 0; i<num; i++){
+            System.out.println("Datos de la persona "+(i+1)+":");
+            System.out.print("Nombre: ");
+            String name = sc.nextLine();
+            System.out.print("Edad: ");
+            int age = sc.nextInt();
+            sc.nextLine();
+            
+            Person p = new Person(name,age);
+            persons[i]=p;
+        }
+        
+        System.out.println("ARREGLO CREADO --- INGRESE LA EDAD A BUSCAR ---");
+        System.out.print("Age: ");
+        int ageFind = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("EL ARREGLO SE ORDENO POR EDAD");
+        controller.sortByAgre(persons);
+        int res = controller.findByAge(persons, ageFind);
+        
+        if (res>= 0) {
+            System.out.println("La persona con la edad: "+ persons[res].getEdad()+ " es: ");
+            System.out.println("\tDATOS: "+ persons[res]);
+        }else{
+            System.out.println("No se encontro una persona con la edad ingresada");
+        }
+        
+        
+        /*Product[] products = {                
+            new Product("Laptop", 20),        
             new Product("SmartPhone",25),
             new Product("Tablet", 10),
             new Product("Monitor",5),
@@ -32,7 +71,7 @@ public class App {
             System.out.println("Esta en la posicion "+result);
         } else {
             System.out.println("No se encontro");
-        }
+        }*/
         
         
         
